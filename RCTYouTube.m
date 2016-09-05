@@ -113,8 +113,15 @@
 }
 
 - (void)playerView:(YTPlayerView *)playerView didChangeToState:(YTPlayerState)state {
-    
+     // NSLog(@"%ld",(long)[[UIApplication sharedApplication] applicationState]);
     NSString *playerState;
+    if (state == kYTPlayerStatePaused && ([[UIApplication sharedApplication] applicationState] == 1 || [[UIApplication sharedApplication] applicationState] == 2)) {
+        [self playVideo];
+    }
+    if (state == kYTPlayerStateBuffering && [[UIApplication sharedApplication] applicationState] == 2) {
+        [self playVideo];
+    }
+    
     switch (state) {
         case kYTPlayerStateUnknown:
             playerState = @"unknown";
